@@ -107,6 +107,12 @@ def html_postages(coord=None, idx=None, notebook=True, savefile=None, htmltitle=
 
     idx_list = random.sample(list(idx), rows*cols)
     
+    if info is None: 
+        info = {'RA':RA, 'DEC':DEC}
+        
+    if veto is None:
+        veto = {'all':np.ones_like(RA, dtype=bool)}
+    
     if layer_list is None:
     
         layer_list = ['dr9f-south', 'dr9f-south-model', 'dr9f-south-resid', 'dr9g-south', 'dr9g-south-model', 'dr9g-south-resid',
@@ -137,14 +143,13 @@ def html_postages(coord=None, idx=None, notebook=True, savefile=None, htmltitle=
                 
             else:
                 
-                if info is not None:
+                #if info is not None:
                     
-                    TOOLTIPS = []
+                TOOLTIPS = []
                     
-                    for key in info.keys():
-                        #print(key)
+                for key in info.keys():
                         
-                        TOOLTIPS.append((key, '@'+key))
+                    TOOLTIPS.append((key, '@'+key))
                   
                 ''' 
                 TOOLTIPS = [
@@ -201,15 +206,15 @@ def html_postages(coord=None, idx=None, notebook=True, savefile=None, htmltitle=
                     
                 else:
                     
-                    if info is not None:
+                    #if info is not None:
                         
-                        data = {}
-                        data['x'] = ravpix
-                        data['y'] = decvpix
-                        for info_key, info_val in zip(info.keys(), info.values()):
-                            data[info_key] = info_val[(mask) & (val)]
+                    data = {}
+                    data['x'] = ravpix
+                    data['y'] = decvpix
+                    for info_key, info_val in zip(info.keys(), info.values()):
+                        data[info_key] = info_val[(mask) & (val)]
                             
-                        sourceCirc = ColumnDataSource(data=data)
+                    sourceCirc = ColumnDataSource(data=data)
                     
                     ''' 
                     sourceCirc = ColumnDataSource(data=dict(
